@@ -19,6 +19,16 @@ def do_command(command):
     cmd_results, cmd_errors = p.communicate()
     command_textbox.insert(tk.END, cmd_results)
     command_textbox.insert(tk.END, cmd_errors)
+
+def mSave(save):
+    filename = asksaveasfilename(defaultextension='.txt', filetypes=(('Text files', '*.txt'), ('Python files', '*.py *.pyw'), ('All files', '*.*')))
+    if filename is None:
+        return
+    file = open(filename, mode='w')
+    text_to_save = command_textbox.get("1.0", tk.END)
+
+    file.write(text_to_save)
+    file.close()
 root = tk.Tk()
 frame = tk.Frame(root)
 frame.pack()
@@ -27,6 +37,14 @@ frame.pack()
 ping_btn = tk.Button(frame, text="Check to see if a URL is up and active", command=lambda:do_command("ping"))
 ping_btn.pack()
 
+ns_btn = tk.Button(frame, text="Click to run nslookup", command=lambda:do_command("nslookup"))
+ns_btn.pack()
+
+trace_btn = tk.Button(frame, text="Click to run tracert", command=lambda:do_command("tracert"))
+trace_btn.pack()
+
+save_btn = tk.Button(frame, text="Click to save", command=lambda:mSave("save"))
+save_btn.pack()
 
 # creates the frame with label for the text box
 frame_URL = tk.Frame(root, pady=10,  bg="black") # change frame color
